@@ -14,7 +14,7 @@ def main():
         input_items = ['work_year','experience_level','employment_type',
                        'job_title','employee_residence','remote_ratio',
                        'company_location','company_size']
-        
+        input_list = []
         for item in input_items:
             if flask.request.form[item]=="":
                                     input_list.append(np.nan)
