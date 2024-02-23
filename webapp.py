@@ -14,21 +14,17 @@ def main():
         input_items = ['work_year','experience_level','employment_type',
                        'job_title','employee_residence','remote_ratio',
                        'company_location','company_size']
+        imputed_values = [2023, 'SE', 'FT', 'Data Engineer', 'US', 0, 'US', 'M']
         
         input_list = []
-        for item in input_items:
+        for idx,item in enumerate(input_items):
             if flask.request.form[item]=="":
-                                    input_list.append(np.nan)
+                                    input_list.append(imputed_values[idx])
             else:
                 input_list.append(flask.request.form[item])
         
         df = pd.DataFrame(input_list).transpose()
         df.columns = input_items
-        
-        with open('model/imputer.pkl','rb') as file:
-            imputer = pickle.load(file)
-        
-        df = pd.DataFrame(imputer.transform(df),columns=input_items)
         
         #Preparing data to fit to model
         with open('model/replacements.pkl','rb') as file:
